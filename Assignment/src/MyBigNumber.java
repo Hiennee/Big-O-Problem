@@ -8,50 +8,41 @@ public class MyBigNumber
     }
     String sum()
     {
-        if (str2.length() > str1.length())
-        {Swap();}
         boolean flag = false;
-        String result = "";
-        int j = str2.length()-1;
-        //System.out.println(Character.getNumericValue(str2.charAt(4)));
-        for (int i = str1.length()-1; i > 0; i--)
+        int len1 = str1.length()-1, len2 = str2.length()-1, tobeAdded = 0;
+        int cAt1, cAt2;
+        int maxlength = len1 > len2 ? len1 : len2;
+        String res = "";
+
+        for (int i = maxlength; i >= 0; i--)
         {
-            int tobeAdded = Character.getNumericValue(str1.charAt(i)) + Character.getNumericValue(str2.charAt(j));
+
+            if (len1 <= -1)
+                cAt1 = 0;
+            else
+                cAt1 = str1.charAt(len1) - '0';
+            if (len2 <= -1)
+                cAt2 = 0;
+            else
+                cAt2 = str2.charAt(len2) - '0';
             if (flag == true)
             {
-                tobeAdded++;
+                tobeAdded = cAt1 + cAt2 + 1;
                 flag = false;
             }
-            if (tobeAdded >= 10)
+            else
+                tobeAdded = cAt1 + cAt2;
+            if (tobeAdded  >= 10)
             {
-                result += tobeAdded % 10;
+                res = tobeAdded % 10 + res;
                 flag = true;
             }
             else
-            {
-                result += tobeAdded;
-            }
+                res = tobeAdded + res;
 
-            j--;
-            if (j==-1)
-            {
-                if (flag == true)
-                {
-                    result += Character.getNumericValue(str1.charAt(i-1)) + 1;
-                }
-                else
-                    result += Character.getNumericValue(str1.charAt(i-1));
-                StringBuffer strBuffer = new StringBuffer(result);
-                result = str1.substring(0, i-1) + strBuffer.reverse().toString();
-            }
-
+            len1--;
+            len2--;
         }
-        return result;
-    }
-    void Swap()
-    {
-        String tmp = str1;
-        str1 = str2;
-        str2 = tmp;
+        return res;
     }
 }
